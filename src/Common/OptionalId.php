@@ -13,4 +13,8 @@ final class OptionalId
 	public static function fromString(string $id) : self {
 		return new static($id);
 	}
+	
+	public function isSame(self $optionalId) : bool {
+		return $optionalId->id === $this->id;
+	}
 }

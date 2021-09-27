@@ -13,4 +13,8 @@ final class OfferId
 	public static function fromString(string $id) : self {
 		return new static($id);
 	}
+	
+	public function isSame(self $offerId) : bool {
+		return $offerId->id === $this->id;
+	}
 }
