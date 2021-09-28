@@ -27,6 +27,7 @@ final class OfferAdder
 		foreach ($offers as $offer) {
 			//potrebbe lanciare un eccezione
 			//devo gestirla qui? oppure più in alto?
+			//se creassi uno strategyObject per la gestione del'eccezione 
 			$offerAggregate->addOffer($offer);
 		}
 	}

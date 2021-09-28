@@ -50,10 +50,9 @@ final class CreateOfferPack
 		,	$offerPack
 		,	$offerIds
 		);
-		
+		//non va quà
 		$offerPack->changeDiscount($discount);
 		
 		$this->offerPackRepo->save($offerPack);
-		
 	}
 }

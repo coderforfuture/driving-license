@@ -58,8 +58,11 @@ final class Offer
 		$this->optionals += $optionals;
 	}
 	
-	public function addDiscountApplyble(DiscountId $discountId) : void {
-		$this->discountApplyables[] = $discountId;
+	public function addDiscountApplyble(DiscountInterface $discount) : void {
+		if ($discount->isAmountGreaterThan($this->price)) {
+			throw new LogicalException("discount amount can't  be greater than the original price");
+		}
+		$this->discountApplyables[] = $discount->id();
 	}
 	
 	public function removeOptional(OptionalIdCollection $optionalIds) : void {
@@ -74,8 +77,11 @@ final class Offer
 		});
 	}
 	
-	public function price() : Price {
-		return $this->price;
+	public function changePrice(Price $price) : void {
+		if ($this->price->isSame($price)) {
+			return;
+		}
+		$this->price = $price;
 	}
 	
 	//@throw OptionalsInConflictException
