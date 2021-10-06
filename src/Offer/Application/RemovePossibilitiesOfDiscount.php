@@ -8,33 +8,33 @@ use App\Common\{
 };
 use App\Offer\Domain\OfferRepositoryInterface as OfferRepository;
 use App\Offer\Application\{
-	AddDiscountsApplyableCommand as Command
-,	DiscountExistenceCheckerInterface as DiscountExistenceChecker
+	RemovePossibilitiesOfDiscountCommand as Command
+//,	DiscountExistenceCheckerInterface as DiscountExistenceChecker
 };
 
-final class AddDiscountsApplyable 
+final class RemovePossibilitiesOfDiscount
 {
 	private OfferRepository $offerRepo;
-	private DiscountExistenceChecker $existenceChecker;
+	//private DiscountExistenceChecker $existenceChecker;
 	
 	public function __construct(
 		OfferRepository $offerRepo
-		DiscountExistenceChecker $existenceChecker
+	//,	DiscountExistenceChecker $existenceChecker
 	){
 		$this->offerRepo = $offerRepo;
-		$this->existenceChecker = $existenceChecker;
+		//$this->existenceChecker = $existenceChecker;
 	}
 	
 	public function execute(Command $command) : void {
 		$id = OfferId::fromString($command->id);
 		$discountIds = DiscountIdCollection::fromArrayOfStrings($command->discountIds);
 		
-		$this->existenceChecker->checkItsExistence($discountIds);
+		//$this->existenceChecker->checkItsExistence($discountIds);
 		
 		$offer = $this->offerRepo->get($id);
 		
 		foreach ($discountIds as $discountId) {
-			$offer->addDiscountApplyble($discountId);
+			$offer->removePossibilityOfDiscount($discountId);
 		}
 		
 		$this->offerRepo->save($offer);

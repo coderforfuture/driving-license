@@ -4,8 +4,8 @@ namespace App\Offer\Application;
 
 use App\Common\DiscountIdCollection;
 
-interface DiscountExistenceCheckerInterface
+interface DiscountProviderInterface
 {
 	//@throw if one or all discouts not exist
-	public function checkItsExistence(DiscountIdCollection $discounts) : void;
+	public function provide(DiscountIdCollection $discounts) : array;
 }

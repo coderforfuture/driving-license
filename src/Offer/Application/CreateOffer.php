@@ -9,12 +9,10 @@ use App\Offer\Domain\{
 use App\Common\{
 	OfferId
 ,	OffertableId
+, 	ServicePakcId
 ,	MoneyInterface as Price //sta cosa del prezzo la devo un po' vedere perché è fastidiosa
 };
-use App\Offer\Application\{
-	CreateOfferCommand as Command
-,	OffertableProviderInterface as OffertableProvider
-};
+use App\Offer\Application\CreateOfferCommand as Command;
 
 final class CreateOffer
 {
@@ -32,10 +30,9 @@ final class CreateOffer
 		$id = OfferId::fromString($command->id);
 		$price = Price::fromString($command->price);
 		$offertableId = OffertableId::fromString($command->offertableId);
+		$servicePackId = ServicePackId:.fromString($command->servicePackId);		
 		
-		$offertable = $this->offertableProvider->provide($offertableId);
-		
-		$offer = Offer::create($id, $offertable, $price);
+		$offer = Offer::create($id, $offertableId, $servicePackId, $price);
 		
 		$this->offerRepo->save($offer);
 	}

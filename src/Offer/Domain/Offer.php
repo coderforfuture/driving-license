@@ -8,70 +8,53 @@ namespace App\Offer\Domain;
 	Possiede un prezzo
 */
 
-//use App\Exception\OptionalsInConflictException;
-
 use App\Common\{
 	OfferId
 ,	DiscountId
-,	OptionalIdCollection
+,	ServicePackId
 ,	MoneyInterface as Price //da rivedere
 };
 use App\Offer\Domain\{
 	OffertableInterface as Offertable
-,	OptionalInterface as Optional
 };
 
 final class Offer
 {
 	private OfferId $id;
-	private Offertable $offertable;
+	private OffertableId $offertableId;
+	private ServicePackId $servicePackId;
 	private Price $price;
-	private array $optionals = [];
 	private array $discountApplyables = [];
 	
 	private function __construct(
 		OfferId $id
-	,	Offertable $offertable
+	,	OffertableId $offertableId
+	,	ServicePackId $servicePackId
 	,	Price $price
 	){
 		$this->id = id;
-		$this->offertable = $offertable;
+		$this->offertableId = $offertableId;
+		$this->servicePackId = $servicePackId;
 		$this->price = $price;
 	}
 	
 	public static function create(
 		OfferId $id
-	,	Offertable $offertable
+	,	OffertableId $offertableId
+	,	ServicePackId $servicePackId
 	,	Price $price
 	) : self {
-		return new static($id, $offertable, $price);
+		return new static($id, $offertableId, $servicePackId, $price);
 	}
-	
-	public static function createFromExistingOffer(OfferId $id, self $offer) : self {
-		$that = new static($id, $offer->offertable, $offer->price);
-		$that->addOptionals(...$offer->optionals);
-		return $that;
-	}
-	
-	public function addOptionals(Optional... $optionals) : void {
-		$this->assertNoConflict($optionals);
-		$this->optionals += $optionals;
-	}
-	
-	public function addDiscountApplyble(DiscountInterface $discount) : void {
+		
+	public function addPossibilityOfDiscount(DiscountInterface $discount) : void {
 		if ($discount->isAmountGreaterThan($this->price)) {
 			throw new LogicalException("discount amount can't  be greater than the original price");
 		}
 		$this->discountApplyables[] = $discount->id();
 	}
 	
-	public function removeOptional(OptionalIdCollection $optionalIds) : void {
-		$this->optionals = array_filter($this->optionals, function($optional) {
-			return !$optionalsIds->has($optional->id());
-		});
-	}
-	
-	public function removeDiscountApplyable(DiscountId $discountId) : void {
+	public function removePossibilityOfDiscount(DiscountId $discountId) : void {
 		$this->discountApplyables = array_filter($this->discountApplyables, function ($discount) {
 			return !$discount->isSame($discountId);
 		});
@@ -82,24 +65,5 @@ final class Offer
 			return;
 		}
 		$this->price = $price;
-	}
-	
-	//@throw OptionalsInConflictException
-	private function assertNoConflict(array $optionals) : void{
-		while (count($optionals)) {
-			$optional = array_shift($optionals);
-			
-			foreach ($optionals as $optToCheck) {
-				if ($optional->hasConflictWith($optToCheck)) {
-					throw new OptionalsInConflictException::conflictBetween($optional, $optToCheck);
-				}
-			}
-			
-			foreach ($this->optionals as $optToCheck) {
-				if ($optional->hasConflictWith($optToCheck)) {
-					throw new OptionalsInConflictException::conflictBetween($optional, $optToCheck);
-				}
-			}
-		}
 	}
 }
