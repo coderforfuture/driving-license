@@ -12,10 +12,8 @@ use App\Common\{
 	OfferId
 ,	DiscountId
 ,	ServicePackId
+,	OffertableId
 ,	MoneyInterface as Price //da rivedere
-};
-use App\Offer\Domain\{
-	OffertableInterface as Offertable
 };
 
 final class Offer

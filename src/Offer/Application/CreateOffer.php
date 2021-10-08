@@ -10,7 +10,7 @@ use App\Common\{
 	OfferId
 ,	OffertableId
 , 	ServicePakcId
-,	MoneyInterface as Price //sta cosa del prezzo la devo un po' vedere perché è fastidiosa
+,	MoneyInterface as Price //non può essere un intefaccia
 };
 use App\Offer\Application\CreateOfferCommand as Command;
 
@@ -27,7 +27,7 @@ final class CreateOffer
 	}
 	
 	public function execute(Command $command) : void {
-		$id = OfferId::fromString($command->id);
+		$id = OfferId::fromString($command->id); //oppure deriva da OffertableId e ServicePackId?
 		$price = Price::fromString($command->price);
 		$offertableId = OffertableId::fromString($command->offertableId);
 		$servicePackId = ServicePackId:.fromString($command->servicePackId);		

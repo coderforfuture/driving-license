@@ -2,9 +2,10 @@
 declare(strict_types=1);
 namespace App\Discount\Domain;
 
+use App\Common\MoneyInterface;
 //todo: finisci
 
-final class Amount
+final class Amount implements MoneyInterface
 {
 	private $amount;
 	
@@ -18,7 +19,7 @@ final class Amount
 		//return new static();
 	}
 	
-	public function isSame(self $amount) : bool {
-		return $this->amount === $amount->amount;
+	public function isSame(MoneyInterface $amount) : bool {
+		return $this->toFloat() === $amount->toFloat();
 	}
 }
