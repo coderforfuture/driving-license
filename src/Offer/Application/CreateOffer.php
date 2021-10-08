@@ -27,10 +27,13 @@ final class CreateOffer
 	}
 	
 	public function execute(Command $command) : void {
-		$id = OfferId::fromString($command->id); //oppure deriva da OffertableId e ServicePackId?
 		$price = Price::fromString($command->price);
 		$offertableId = OffertableId::fromString($command->offertableId);
-		$servicePackId = ServicePackId:.fromString($command->servicePackId);		
+		$servicePackId = ServicePackId::fromString($command->servicePackId);
+		$id = OfferId::fromOffertableAndServicePack(
+			$offertableId
+		,	$servicePackId
+		);
 		
 		$offer = Offer::create($id, $offertableId, $servicePackId, $price);
 		

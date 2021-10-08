@@ -17,4 +17,8 @@ final class OffertableId
 	public function isSame(self $offertableId) : bool {
 		return $this->id === $offertableId->id;
 	}
+	
+	public function toString() : string {
+		return $this->id;
+	}
 }
