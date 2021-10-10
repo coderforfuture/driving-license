@@ -6,7 +6,7 @@ use App\Common\ServiceId;
 use App\Service\Domain\{
 	Service
 ,	ServiceRepositoryInterface as ServiceRepository
-,	RangedQuantity
+,	QuantityRange
 ,	Description
 };
 use App\Service\Application\CreateServiceCommand as Command;
@@ -23,7 +23,7 @@ final class CreateService
 	
 	public function execute(Command $command) : void {
 		$id = ServiceId::fromString($command->id);
-		$rangedQuantity = RangedQuantity::create($command->min, $command->max);
+		$rangedQuantity = QuantityRange::create($command->min, $command->max);
 		$description = Description::fromString($command->description);//can have more then one?
 	
 		$service = Service::create($id, $rangeQuantity, $description);
