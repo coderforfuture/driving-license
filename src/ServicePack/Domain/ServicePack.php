@@ -2,7 +2,10 @@
 declare(strict_types=1);
 namespace App\ServicePack\Domain;
 
-use \App\Common\ServicePackId;
+use \App\Common\{
+	ServicePackId
+,	ServiceId
+};
 
 //ServicePackName and Service are in that domain (I think)
 
@@ -36,13 +39,28 @@ final class ServicePack
 		$that->services = $existingPack->services;
 	}
 	
+	private function hasService(ServiceId $serviceId) : bool {
+		foreach ($this->services as $service) {
+			if ($serviceId->isSame($service->id())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public function addService(Service $service) : void {
-		$this->assertNoConflict($service);
+		if ($this->hasService($service->id())) {
+			//throw CannotAddServiceException::becauseServiceIsPresent($service);
+			return;
+		}
+		//$this->assertNoConflict($service); //forse non serve
 		$this->services[] = $service;
 	}
 	
-	public function removeService(Service $service) : void {
-		//todo
+	public function removeService(ServiceId $serviceId) : void {
+		$this->services = array_filter($this->services, function ($service) use ($serviceId){
+			return !$serviceId->isSame($service->id());
+		});
 	}
 	
 	private function assertNoConflict($service) : void {

@@ -53,7 +53,7 @@ final class Offer
 	}
 	
 	public function removePossibilityOfDiscount(DiscountId $discountId) : void {
-		$this->discountApplyables = array_filter($this->discountApplyables, function ($discount) {
+		$this->discountApplyables = array_filter($this->discountApplyables, function ($discount) use ($discountId) {
 			return !$discount->isSame($discountId);
 		});
 	}
