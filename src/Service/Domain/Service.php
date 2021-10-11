@@ -27,4 +27,19 @@ final class Service
 	) : self {
 		return new static($id, $quantityRange, $description);
 	}
+	
+	public function changeDescription(Description $description) : void {
+		if ($description->isSame($this->description)) {
+			return;
+		}
+		$this->description = $description;
+	}
+	
+	public function changeMaxQuantity(int $max) : void {
+		$this->quantityRange = $this->quantityRange->withMax($max);
+	}
+	
+	public function changeMinQuantity(int $min) : void {
+		$this->quantityRange = $this->quantityRange->withMin($min);
+	}
 }

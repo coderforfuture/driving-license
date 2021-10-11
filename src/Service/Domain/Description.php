@@ -11,10 +11,15 @@ final class Description
 	}
 	
 	public static function fromString(string $description) : self {
+		$description = trim($description);
 		return new static($description);
 	}
 	
 	public static function empty() : self {
 		return new static("");
+	}
+	
+	public function isSame(self $description) : bool {
+		return $this->description === $description->description;
 	}
 }
