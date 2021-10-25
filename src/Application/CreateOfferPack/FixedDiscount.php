@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\Domain\OfferPack;
+namespace App\Application\CreateOfferPack;
 
 use App\Domain\MoneyInterface as Amount;
 

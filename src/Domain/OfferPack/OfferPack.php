@@ -5,6 +5,7 @@ namespace App\Domain\OfferPack
 use App\Domain\{
 	OfferPackId
 ,	OfferId
+,	DiscountInterface
 };
 use App\Domain\OfferAggregate\{
 	OfferAggregateInterface as OfferAggregate
