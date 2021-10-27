@@ -7,8 +7,7 @@ final class Percentage
 	private float $percentage;
 	
 	public static function fromString(string $percentage) : self {
-		//todo;
-		
+		//should I use a formatter for that?
 	}
 	
 	public static function fromFloat(float $percentage) : self {
