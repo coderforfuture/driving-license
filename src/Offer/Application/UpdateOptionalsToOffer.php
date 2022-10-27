@@ -9,8 +9,8 @@ use App\Offer\Domain\{
 };
 use App\Common\{
 	OfferId
-,	OptionalCollection //da vedere
-,	UpdatedOptionalCollection //da vedere
+,	OptionalCollection //da vedere forse nel domain
+,	UpdatedOptionalCollection //da vedere forse nel domain
 ,	OptionalIdCollection
 };
 use App\Offer\Application\UpdateOptionalsToOfferCommand as Command;

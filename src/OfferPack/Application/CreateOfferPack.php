@@ -13,45 +13,46 @@ use App\OfferPack\Domain\{
 use App\Common\{
 	OfferPackId
 ,	OfferIdCollection
-,	DiscountId
 };
-use App\OfferPack\Application\CreateOfferPackCommand as Command;
+use App\OfferPack\Application\{
+	CreateOfferPackCommand as Command
+,	DiscountFactoryInterface as DiscountFactory
+};
 
 final class CreateOfferPack
 {
 	private OfferPackRepository $offerPackRepo;
 	private OfferProvider $offerProvider;
-	private DiscountProvider $discountProvider;
+	private DiscountFactory $discountFactory;
 	private OfferAdder $offerAdder;
 	
 	public function __construct(
 		OfferPackRepository $offerPackRepo
 	,	OfferProvider $offerProvider
-	,	DiscountProvider $discountProvider
+	,	DiscountFactory $discountFactory
 	,	OfferAdder $offerAdder
 	){
 		$this->offerPackRepo = $offerPackRepo;
 		$this->offerProvider = $offerProvider;
-		$this->discountProvider = $discountProvider;
+		$this->discountFactory = $discountFactory;
 		$this->offerAdder = $offerAdder;
 	}
 	
 	public function execute(Command $command) : void {
 		$id = OfferPackId::fromString($command->id);
 		$offerIds = OfferIdCollection::fromArrayOfStrings($command->offerIds);
-		$discountId = DiscountId::fromString($command->discountId);
 		
-		$discount = $this->discountProvider->provide($discountId);
+		$discount = $this->discountFactory->createFromString($command->);
 		
-		$offerPack = OfferPack::createWithId($id);
+		$offerPack = OfferPack::create($id, $discount);
 		
 		$this->offerAdder->addOffers(
 			$this->offerProvider
 		,	$offerPack
 		,	$offerIds
 		);
-		//non va quà
-		$offerPack->changeDiscount($discount);
+		
+		$offerPack->publish();
 		
 		$this->offerPackRepo->save($offerPack);
 	}
