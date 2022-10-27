@@ -2,8 +2,14 @@
 declare(strict_types=1);
 namespace App\OfferPack\Domain;
 
-use App\Common\OfferPackId;
-use App\OfferAggregate\Domain\OfferAggregateInterface as OfferAggregate;
+use App\Common\{
+	OfferPackId
+,	OfferId
+};
+use App\OfferAggregate\Domain\{
+	OfferAggregateInterface as OfferAggregate
+,	OfferInterface
+};
 use App\Common\MoneyInterface;
 
 final class OfferPack implements OfferAggregate
@@ -35,7 +41,7 @@ final class OfferPack implements OfferAggregate
 	
 	public function removeOffer(OfferId $offerId) : void {
 		$this->offers = array_filter($this->offers, function($offer){
-			return !$offer->id()->isSame($offerId);
+			return !$offer->hasId($offerId);
 		});
 	}
 	
@@ -53,7 +59,7 @@ final class OfferPack implements OfferAggregate
 			return;
 		}
 		
-		if ($discount->amount()->isGreatherThan($this->totalPrice())) {
+		if ($discount->isAmountGreatherThan($this->totalPrice())) {
 			//penso che questo sia un errore di logica
 			throw new LogicalException("is not possible discount a price more than itself");
 		}
