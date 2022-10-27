@@ -7,7 +7,7 @@ use App\Common\MoneyInterface;
 
 final class Amount implements MoneyInterface
 {
-	private $amount;
+	private string $amount; //?
 	
 	public static function fromString(string $amount) : self {
 		//todo

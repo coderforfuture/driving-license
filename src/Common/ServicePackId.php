@@ -17,4 +17,8 @@ final class ServicePackId
 	public function isSame(self $servicePackId) : bool {
 		return $this->id === $servicePackId->id;
 	}
+	
+	public function toString() : string {
+		return $this->id;
+	}
 }
