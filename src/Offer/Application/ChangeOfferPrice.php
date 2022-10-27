@@ -4,7 +4,7 @@ namespace App\Offer\Application;
 
 use App\Common\{
 	OfferId
-,	MoneyInterface as Price
+,	MoneyInterface as Price //non può essere un interfaccia
 };
 use App\Offer\Domain\{
 	OfferRepositoryInterface as OfferRepository

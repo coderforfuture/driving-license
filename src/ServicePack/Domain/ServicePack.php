@@ -33,7 +33,6 @@ final class ServicePack
 	,	self $existingPack
 	) : self {
 		$that = new static($id, $name);
-		//devo fare un clone?
 		$that->services = $existingPack->services;
 	}
 	

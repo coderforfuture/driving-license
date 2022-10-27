@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Common;
 
-final class OptionalId
+final class ServicePackId
 {
 	private string $id;
 	
@@ -14,7 +14,7 @@ final class OptionalId
 		return new static($id);
 	}
 	
-	public function isSame(self $optionalId) : bool {
-		return $optionalId->id === $this->id;
+	public function isSame(self $servicePackId) : bool {
+		return $this->id === $servicePackId->id;
 	}
 }

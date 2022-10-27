@@ -2,9 +2,7 @@
 declare(strict_types=1);
 namespace App\Common;
 
-//fare anche un costruttore da offertableId e ServicePackId
-
-final class OfferId
+final class OffertableId
 {
 	private string $id;
 	
@@ -16,7 +14,7 @@ final class OfferId
 		return new static($id);
 	}
 	
-	public function isSame(self $offerId) : bool {
-		return $offerId->id === $this->id;
+	public function isSame(self $offertableId) : bool {
+		return $this->id === $offertableId->id;
 	}
 }

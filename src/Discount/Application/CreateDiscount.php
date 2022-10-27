@@ -5,6 +5,7 @@ namespace App\Discount\Application;
 use App\Discount\Domain\{
 	DiscountRepositoryInteface as DiscountRepository
 ,	Discount
+,	Amount
 };
 use App\Common\{
 	DiscountId
@@ -23,7 +24,7 @@ final class CreateDiscount
 	
 	public function execute(Command $command) : void {
 		$id = DiscountId::fromString($command->id);
-		$amount = DiscountAmount::fromString($command->amount);
+		$amount = Amount::fromString($command->amount);
 		
 		$discount = Discount::create($id, $amount);
 		
