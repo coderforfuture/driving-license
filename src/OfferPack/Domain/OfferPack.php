@@ -4,7 +4,7 @@ namespace App\OfferPack\Domain;
 
 use App\Common\OfferPackId;
 use App\OfferAggregate\Domain\OfferAggregateInterface as OfferAggregate;
-//use App\devoDecidereDaDove\MoneyInterface;
+use App\Common\MoneyInterface;
 
 final class OfferPack implements OfferAggregate
 {
