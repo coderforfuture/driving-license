@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace App\Domain\OfferPack;
+namespace App\Application\CreateOfferPack;
 
 use App\Domain\MoneyInterface as Amount;
 
@@ -25,7 +25,7 @@ final class PercentageDiscount implements DiscountInterface
 	}
 	
 	public function isAmountGreaterThan(Amount $amount) : bool {
-		return $this->percentage->isGreaterThan(Percentage::hundredPercent());
+		return false;
 	}
 	
 	public function isSame(DiscountInterface $discount) : bool {

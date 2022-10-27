@@ -14,6 +14,7 @@ use App\Domain\{
 ,	ServicePackId
 ,	OffertableId
 ,	MoneyInterface as Price //da rivedere
+,	DiscountInterface
 };
 
 final class Offer
